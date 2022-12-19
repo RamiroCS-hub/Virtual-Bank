@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="resources/css/style.css">
+</head>
+<body>
+    <h2>Registro</h2>
+    <form method="POST" action="/registro">
+        <label for="userName">Nombre de usuario</label>
+        <input type="text" name="userName">
+
+        <label for="fullName">Nombre completo</label>
+        <input type="text" name="fullName">
+
+        <label for="pass">Contraseña</label>
+        <input type="text" name="pass">
+
+        <label for="confirmPass">Confirmar contraseña</label>
+        <input type="text" name="confirmPass">
+
+        <input type="submit">
+    </form>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <% if(typeof alert != "undefined"){ %>
+        <script>
+            Swal.fire({
+                title:"<%= alertTitle %>",
+                text:"<%= alertMessage %>",
+                icon:"<%= alertIcon %>",
+                showConfirmButton:<%= showConfirmButton %>,
+                timer:<%= timer %>
+            }).then(() =>{
+                window.location = "/<%=ruta %>"
+            });
+        </script>    
+    <% }%>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <% if (logged) { %>
+        <h1>Estas en la Home Page</h1>
+        <h2>El usuario es <%= userName%> y su balance es <%= balance%>. Su cbu es: <%= cbu%></h2>
+        <form action="/money"  method="POST">
+            <label for="amount">Ingrese un monto</label>
+            <input type="number" name="amount">
+
+            <button type="submit">Ingresar monto</button>
+        </form>
+
+        <form action="/transfer" method="POST">
+            <label for="transferId">Ingrese el cbu a transferir</label>
+            <input name="transferId" type="text">
+            
+            <label for="transferAmount">Ingrese el monto a transferir</label>
+            <input name="transferAmount" type="number">
+
+            <button type="submit">Transferir dinero</button>
+        </form>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <% if (alert) { %>
+            <script>
+                Swal.fire({
+                    title:"Problema con la transferencia",
+                    text:"CVU no existente",
+                    icon:"error",
+                    showConfirmButton:true,
+                    timer:0
+                }).then(() =>{
+                    window.location = "/home";
+                }); 
+            </script>
+        <% } %>
+
+        <% if (alertMoney) { %>
+            <script>
+                Swal.fire({
+                    title:"Ingreso exitoso",
+                    text:"Ya se ingreso el dinero",
+                    icon:"success",
+                    showConfirmButton:false,
+                    timer:1500
+                }).then(() =>{
+                    window.location = "/home";
+                }); 
+            </script>
+        <% } %>
+
+        <!--- Etiqueta logout para deslogear la cuenta -->
+        <a href="/logout">Logout</a>
+    
+    <!-- Vista si no hay ninguna cuenta logeada -->
+    <% } else { %>
+        <h1>Necesita iniciar sesion</h1>
+        <a href="login">Ir a login</a>
+    <% } %>
+
+</body>
+</html>

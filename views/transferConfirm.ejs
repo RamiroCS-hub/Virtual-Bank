@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Confirmar transferencia</h1>
+    <form action="/transferConfirm" method="POST">
+        <label for="userName">Nombre de usuario</label>
+        <input name="userName" value="<%=userName%>" readonly="true"></input>
+        
+        <label for="fullName">Nombre completo</label>
+        <input name="fullName" value="<%=fullName%>" readonly="true"></input> 
+        
+        <label for="cbu">CBU</label>
+        <input name="cbu" value="<%=cbu%>" readonly="true">
+
+        <label for="actualAmount">Cantidad en la cuenta</label>
+        <input name="actualAmount" value="<%=actualAmount%>" readonly="true">
+
+        <label for="amount">Cantidad a enviar</label>
+        <input name="amount" value="<%=amountToSend%>" readonly="true">
+
+        <button type="submit">Confirmar transferencia</button>
+    </form>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <%if (alert) {%>
+        <script>
+            Swal.fire({
+                title:"Envío exitoso",
+                text:"Se ah realizado la transferencia con exito",
+                icon:"success",
+                showConfirmButton:false,
+                timer:1500
+            }).then(() =>{
+                window.location = "/home"
+            });
+        </script>
+    <% } %>
+</body>
+</html>
