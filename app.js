@@ -46,7 +46,6 @@ app.post("/auth",async (req,res) =>{
     console.log(req.body);
     connection.query("SELECT * FROM `usuarios` WHERE `userName` = ?",[req.body.userName],
     async (err,results) =>{
-        
          if(results.length == 0 || !(await bcryptjs.compare(req.body.pass, results[0].pass))){
             res.render("login",{
                 alert:true,
@@ -184,18 +183,19 @@ app.post("/money",(req,res) => {
         }
         console.log(results);
         if(req.session.logged){
-            let newAmount = results[0].balance + parseInt(addedAmount);
-            connection.query("UPDATE `usuarios` SET `balance` = ? WHERE `userName` = ? ",[newAmount,req.session.userName],
+            req.session.balance = results[0].balance + parseInt(addedAmount);
+            connection.query("UPDATE `usuarios` SET `balance` = ? WHERE `userName` = ? ",[req.session.balance,req.session.userName],
             (err,results) => {
                 if(err){
                     console.log("Ocurrdo un error actualizando el balance",err);
                     return;
                 }
                 console.log("Los result fueron:",results);
+                console.log("El nuevo amount es:",req.session.balance);
                 res.render("home",{
                     logged:req.session.logged,
                     userName:req.session.userName,
-                    balance: newAmount,
+                    balance: req.session.balance,
                     cbu: req.session.cbu,
                     alert:false,
                     alertMoney:true
