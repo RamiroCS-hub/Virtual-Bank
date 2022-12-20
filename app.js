@@ -75,6 +75,15 @@ app.post("/auth",async (req,res) =>{
                 });
             };
         }catch{
+            res.render("login",{
+                alert:true,
+                alertTitle:"Inicio de sesión fallido",
+                alertMessage:"Nombre de usuario y/o Contraseña incorrectos",
+                alertIcon:"error",
+                showConfirmButton:true,
+                timer:0,
+                ruta:"login"
+            });
             console.log("Ocurrio un error fuera del try");
         }
     });
