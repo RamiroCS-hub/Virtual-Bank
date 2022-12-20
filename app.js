@@ -46,35 +46,8 @@ app.post("/auth",async (req,res) =>{
     console.log(req.body);
     connection.query("SELECT * FROM `usuarios` WHERE `userName` = ?",[req.body.userName],
     async (err,results) =>{
-        try{
-            if(results.length == 0 || !(await bcryptjs.compare(req.body.pass, results[0].pass))){
-                res.render("login",{
-                    alert:true,
-                    alertTitle:"Inicio de sesión fallido",
-                    alertMessage:"Nombre de usuario y/o Contraseña incorrectos",
-                    alertIcon:"error",
-                    showConfirmButton:true,
-                    timer:0,
-                    ruta:"login"
-                });
-                console.log("ocurrio un error");
-            }else{
-                console.log("Todo funciono bien");
-                req.session.logged = true;
-                req.session.userName = results[0].userName;
-                req.session.balance = results[0].balance;
-                req.session.cbu = results[0].cbu;
-                res.render("login",{
-                    alert:true,
-                    alertTitle:"Inicio de sesión exitoso",
-                    alertMessage:"Se inicio sesión correctamente!",
-                    alertIcon:"success",
-                    showConfirmButton:false,
-                    timer:1500,
-                    ruta:"home"
-                });
-            };
-        }catch{
+        
+         if(results.length == 0 || !(await bcryptjs.compare(req.body.pass, results[0].pass))){
             res.render("login",{
                 alert:true,
                 alertTitle:"Inicio de sesión fallido",
@@ -84,8 +57,23 @@ app.post("/auth",async (req,res) =>{
                 timer:0,
                 ruta:"login"
             });
-            console.log("Ocurrio un error fuera del try");
-        }
+            console.log("ocurrio un error");
+        }else{
+            console.log("Todo funciono bien");
+            req.session.logged = true;
+            req.session.userName = results[0].userName;
+            req.session.balance = results[0].balance;
+            req.session.cbu = results[0].cbu;
+            res.render("login",{
+                alert:true,
+                alertTitle:"Inicio de sesión exitoso",
+                alertMessage:"Se inicio sesión correctamente!",
+                alertIcon:"success",
+                showConfirmButton:false,
+                timer:1500,
+                ruta:"home"
+            });
+        };
     });
 });
 
